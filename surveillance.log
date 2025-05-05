@@ -1,0 +1,146 @@
+2025-05-03 23:50:03,787 - WARNING - Aucun modèle trouvé, création d'un modèle minimal
+2025-05-03 23:50:08,137 - CRITICAL - Erreur: [WinError 10061] No connection could be made because the target machine actively refused it
+2025-05-03 23:53:21,986 - WARNING - Aucun modèle trouvé, création d'un modèle minimal
+2025-05-03 23:53:22,634 - INFO - Connecté au broker MQTT avec succès
+2025-05-03 23:53:22,636 - INFO - Abonné au topic esp32_1: sensor/dht22/esp32_1
+2025-05-03 23:53:22,636 - INFO - Abonné au topic esp32_2: sensor/dht22/esp32_2
+2025-05-03 23:53:22,669 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.103:5000
+2025-05-03 23:53:22,671 - INFO - [33mPress CTRL+C to quit[0m
+2025-05-03 23:53:28,553 - INFO - Page dashboard demandée
+2025-05-03 23:53:28,554 - ERROR - Exception on / [GET]
+Traceback (most recent call last):
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "C:\Users\ala\Desktop\nassim\main.py", line 537, in dashboard
+    return render_template('dashboard.html')
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\flask\templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\jinja2\environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\jinja2\loaders.py", line 126, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\flask\templating.py", line 65, in get_source
+    return self._get_source_fast(environment, template)
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\flask\templating.py", line 99, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: dashboard.html
+2025-05-03 23:53:28,567 - INFO - 127.0.0.1 - - [03/May/2025 23:53:28] "[35m[1mGET / HTTP/1.1[0m" 500 -
+2025-05-03 23:53:31,286 - INFO - 127.0.0.1 - - [03/May/2025 23:53:31] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-05-03 23:57:16,729 - INFO - Page dashboard demandée
+2025-05-03 23:57:16,737 - ERROR - Exception on / [GET]
+Traceback (most recent call last):
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "C:\Users\ala\Desktop\nassim\main.py", line 537, in dashboard
+    if is_alert:
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\flask\templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\jinja2\environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\jinja2\loaders.py", line 126, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\flask\templating.py", line 65, in get_source
+    return self._get_source_fast(environment, template)
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\flask\templating.py", line 99, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: dashboard.html
+2025-05-03 23:57:16,794 - INFO - 127.0.0.1 - - [03/May/2025 23:57:16] "[35m[1mGET / HTTP/1.1[0m" 500 -
+2025-05-03 23:57:39,160 - WARNING - Aucun modèle trouvé, création d'un modèle minimal
+2025-05-03 23:57:39,393 - INFO - Connecté au broker MQTT avec succès
+2025-05-03 23:57:39,393 - INFO - Abonné au topic esp32_1: sensor/dht22/esp32_1
+2025-05-03 23:57:39,393 - INFO - Abonné au topic esp32_2: sensor/dht22/esp32_2
+2025-05-03 23:57:39,410 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.103:5000
+2025-05-03 23:57:39,411 - INFO - [33mPress CTRL+C to quit[0m
+2025-05-03 23:57:46,165 - INFO - Page dashboard demandée
+2025-05-03 23:57:46,167 - ERROR - Exception on / [GET]
+Traceback (most recent call last):
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "C:\Users\ala\Desktop\nassim\main.py", line 558, in dashboard
+    return render_template("dashboard.html")
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\flask\templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\jinja2\environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\jinja2\loaders.py", line 126, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\flask\templating.py", line 65, in get_source
+    return self._get_source_fast(environment, template)
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\flask\templating.py", line 99, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: dashboard.html
+2025-05-03 23:57:46,175 - INFO - 127.0.0.1 - - [03/May/2025 23:57:46] "[35m[1mGET / HTTP/1.1[0m" 500 -
+2025-05-03 23:57:58,415 - INFO - Page dashboard demandée
+2025-05-03 23:57:58,592 - INFO - 127.0.0.1 - - [03/May/2025 23:57:58] "GET / HTTP/1.1" 200 -
+2025-05-03 23:58:00,964 - INFO - 127.0.0.1 - - [03/May/2025 23:58:00] "GET /api/data HTTP/1.1" 200 -
+2025-05-03 23:58:05,968 - INFO - 127.0.0.1 - - [03/May/2025 23:58:05] "GET /api/data HTTP/1.1" 200 -
+2025-05-03 23:58:10,967 - INFO - 127.0.0.1 - - [03/May/2025 23:58:10] "GET /api/data HTTP/1.1" 200 -
+2025-05-03 23:58:15,978 - INFO - 127.0.0.1 - - [03/May/2025 23:58:15] "GET /api/data HTTP/1.1" 200 -
+2025-05-03 23:58:18,429 - INFO - Page graphiques demandée
+2025-05-03 23:58:18,558 - INFO - 127.0.0.1 - - [03/May/2025 23:58:18] "GET /graphiques HTTP/1.1" 200 -
+2025-05-03 23:58:19,235 - INFO - 127.0.0.1 - - [03/May/2025 23:58:19] "GET /api/graph_data?period=1h HTTP/1.1" 200 -
+2025-05-03 23:58:22,531 - INFO - Page historique demandée
+2025-05-03 23:58:22,532 - ERROR - Exception on /historique [GET]
+Traceback (most recent call last):
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "C:\Users\ala\Desktop\nassim\main.py", line 776, in historique
+    return render_template("historique.html")
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\flask\templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\jinja2\environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\jinja2\loaders.py", line 126, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\flask\templating.py", line 65, in get_source
+    return self._get_source_fast(environment, template)
+  File "C:\Users\ala\Desktop\nassim\venv\lib\site-packages\flask\templating.py", line 99, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: historique.html
+2025-05-03 23:58:22,534 - INFO - 127.0.0.1 - - [03/May/2025 23:58:22] "[35m[1mGET /historique HTTP/1.1[0m" 500 -

@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALERTESTAPIS - Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v6.0.0-beta3/css/all.css">
+    <style>
+        :root {
+            --primary-color: #6c5ce7;
+            --secondary-color: #a8a4e6;
+            --background-color: #f8f9fe;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        body {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGRlZnM+CiAgICA8cGF0dGVybiBpZD0icGF0dGVybiIgeD0iMCIgeT0iMCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KICAgICAgICA8Y2lyY2xlIGN4PSIyMCIgY3k9IjIwIiByPSIxIiBmaWxsPSJ3aGl0ZSIgZmlsbC1vcGFjaXR5PSIwLjEiLz4KICAgIDwvcGF0dGVybj4KPC9kZWZzPgo8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI3BhdHRlcm4pIi8+Cjwvc3ZnPg==');
+            opacity: 0.5;
+            z-index: -1;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .navbar-brand {
+            color: white !important;
+            font-weight: bold;
+            font-size: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .nav-link {
+            color: white !important;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            transform: translateY(-2px);
+            text-shadow: 0 0 10px rgba(255,255,255,0.8);
+        }
+
+        .nav-icon {
+            margin-right: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover .nav-icon {
+            transform: translateY(-2px) rotate(10deg);
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 45px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .sensor-value {
+            font-size: 2.8rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover .sensor-value {
+            transform: scale(1.1);
+        }
+
+        .sensor-range {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        .progress {
+            height: 10px;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            transition: width 0.5s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .status-ok {
+            background: rgba(0, 184, 148, 0.3);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            border: 1px solid rgba(0, 184, 148, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .status-error {
+            background: rgba(255, 118, 117, 0.3);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 118, 117, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .card-title {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .badge {
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        #detected-problems {
+            list-style: none;
+            padding: 0;
+        }
+
+        #detected-problems li {
+            color: white;
+            margin-bottom: 0.5rem;
+            padding: 8px 15px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        #detected-problems li:hover {
+            transform: translateX(10px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .last-update {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        /* Animations pour les mises à jour */
+        .update-flash {
+            animation: flash 0.5s ease;
+        }
+
+        @keyframes flash {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Styles pour les icônes */
+        .sensor-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover .sensor-icon {
+            transform: rotate(15deg) scale(1.2);
+            color: white;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        .status-icon {
+            margin-right: 10px;
+            animation: pulse 2s infinite;
+        }
+
+        .alert-icon {
+            color: #ff7675;
+            animation: shake 0.8s infinite;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .success-icon {
+            color: #00b894;
+        }
+
+        .warning-icon {
+            color: #fdcb6e;
+        }
+
+        .danger-icon {
+            color: #ff7675;
+        }
+
+        .btn-filter {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-filter:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .chart-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 10px;
+            margin-top: 1rem;
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .card-title i {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Style pour le bouton d'urgence */
+        .emergency-button {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 0, 0, 0.8);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            border: 2px solid #fff;
+            font-weight: bold;
+            cursor: pointer;
+            animation: pulse-red 2s infinite;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+        }
+
+        .emergency-button:hover {
+            transform: scale(1.1);
+            background: rgba(255, 0, 0, 1);
+        }
+
+        @keyframes pulse-red {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 20px rgba(255, 0, 0, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+            }
+        }
+
+        .conveyor-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .conveyor-title {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .conveyor-badge {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Boutons d'arrêt d'urgence -->
+    <button id="emergency-stop-esp32_1" class="emergency-button" style="display: none; right: 200px;">
+        <i class="fa-duotone fa-octagon-exclamation me-2"></i>
+        ARRÊT D'URGENCE CONVOYEUR 1
+    </button>
+    <button id="emergency-stop-esp32_2" class="emergency-button" style="display: none; right: 20px;">
+        <i class="fa-duotone fa-octagon-exclamation me-2"></i>
+        ARRÊT D'URGENCE CONVOYEUR 2
+    </button>
+
+    <nav class="navbar navbar-expand-lg mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fa-duotone fa-sensor-triangle-exclamation nav-icon"></i>
+                ALERTESTAPIS
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/">
+                    <i class="fa-duotone fa-gauge-high nav-icon"></i> Dashboard
+                </a>
+                <a class="nav-link" href="/historique">
+                    <i class="fa-duotone fa-clock-rotate-left nav-icon"></i> Historique
+                </a>
+                <a class="nav-link" href="/download_history">
+                    <i class="fa-duotone fa-file-arrow-down nav-icon"></i> Télécharger CSV
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-12 d-flex justify-content-end">
+                <a href="/graphiques" class="btn btn-filter me-2">
+                    <i class="fa-duotone fa-chart-line"></i> Graphiques
+                </a>
+                <a href="/historique" class="btn btn-filter">
+                    <i class="fa-duotone fa-clock-rotate-left"></i> Historique
+                </a>
+            </div>
+        </div>
+
+        <!-- Convoyeur 1 -->
+        <div class="conveyor-section">
+            <h2 class="conveyor-title">
+                Convoyeur 1
+                <span class="conveyor-badge" id="status-esp32_1">En ligne</span>
+            </h2>
+            <div class="row g-4">
+                <!-- Température -->
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="fa-duotone fa-temperature-half sensor-icon"></i>
+                            <h5 class="card-title">Température</h5>
+                            <div class="sensor-value" id="temperature-esp32_1">--°C</div>
+                            <div class="progress mt-2">
+                                <div class="progress-bar bg-danger" id="temp-progress-esp32_1" role="progressbar"></div>
+                            </div>
+                            <div class="sensor-range mt-2">-10.0°C à 40.0°C</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Humidité -->
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="fa-duotone fa-droplet sensor-icon"></i>
+                            <h5 class="card-title">Humidité</h5>
+                            <div class="sensor-value" id="humidity-esp32_1">--%</div>
+                            <div class="progress mt-2">
+                                <div class="progress-bar bg-info" id="humidity-progress-esp32_1" role="progressbar"></div>
+                            </div>
+                            <div class="sensor-range mt-2">20.0% à 85.0%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vibration -->
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="fa-duotone fa-wave-sine sensor-icon"></i>
+                            <h5 class="card-title">Vibration</h5>
+                            <div class="sensor-value" id="vibration-esp32_1">--mm/s</div>
+                            <div class="progress mt-2">
+                                <div class="progress-bar bg-warning" id="vibration-progress-esp32_1" role="progressbar"></div>
+                            </div>
+                            <div class="sensor-range mt-2">0.0mm/s à 10.0mm/s</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tension -->
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="fa-duotone fa-bolt sensor-icon"></i>
+                            <h5 class="card-title">Tension</h5>
+                            <div class="sensor-value" id="voltage-esp32_1">--V</div>
+                            <div class="progress mt-2">
+                                <div class="progress-bar bg-primary" id="voltage-progress-esp32_1" role="progressbar"></div>
+                            </div>
+                            <div class="sensor-range mt-2">210V à 250V</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Courant -->
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="fa-duotone fa-amp sensor-icon"></i>
+                            <h5 class="card-title">Courant</h5>
+                            <div class="sensor-value" id="current-esp32_1">--A</div>
+                            <div class="progress mt-2">
+                                <div class="progress-bar bg-success" id="current-progress-esp32_1" role="progressbar"></div>
+                            </div>
+                            <div class="sensor-range mt-2">0.0A à 20.0A</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statut Système -->
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="fa-duotone fa-shield-check sensor-icon"></i>
+                            <h5 class="card-title">Statut du Système</h5>
+                            <div class="status-ok mt-3" id="system-status-esp32_1">
+                                <i class="fa-duotone fa-circle-check status-icon"></i>
+                                Tout est normal
+                            </div>
+                            <div class="mt-3">
+                                <strong>État Moteur: </strong>
+                                <span id="motor-status-esp32_1" class="badge bg-success">
+                                    <i class="fa-duotone fa-engine status-icon"></i>
+                                    OK
+                                </span>
+                            </div>
+                            <div class="last-update mt-3" id="last-update-esp32_1">
+                                <i class="fa-duotone fa-clock"></i>
+                                Dernière mise à jour: --:--
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analyse Moteur -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <i class="fa-duotone fa-chart-network sensor-icon"></i>
+                            <h5 class="card-title">Analyse Moteur</h5>
+                            <div class="mt-3">
+                                <strong>
+                                    <i class="fa-duotone fa-triangle-exclamation"></i>
+                                    Risque de Panne:
+                                </strong>
+                                <span id="failure-risk-esp32_1">0%</span>
+                            </div>
+                            <div class="mt-2">
+                                <strong>
+                                    <i class="fa-duotone fa-clipboard-list-check"></i>
+                                    Problèmes Détectés:
+                                </strong>
+                                <ul id="detected-problems-esp32_1" class="mt-2">
+                                    <li>
+                                        <i class="fa-duotone fa-check-circle success-icon"></i>
+                                        Aucun problème détecté
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Convoyeur 2 -->
+        <div class="conveyor-section">
+            <h2 class="conveyor-title">
+                Convoyeur 2
+                <span class="conveyor-badge" id="status-esp32_2">En ligne</span>
+            </h2>
+            <!-- Répéter la même structure que pour le Convoyeur 1 mais avec les IDs modifiés pour esp32_2 -->
+            <div class="row g-4">
+                <!-- Température -->
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="fa-duotone fa-temperature-half sensor-icon"></i>
+                            <h5 class="card-title">Température</h5>
+                            <div class="sensor-value" id="temperature-esp32_2">--°C</div>
+                            <div class="progress mt-2">
+                                <div class="progress-bar bg-danger" id="temp-progress-esp32_2" role="progressbar"></div>
+                            </div>
+                            <div class="sensor-range mt-2">-10.0°C à 40.0°C</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Humidité -->
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="fa-duotone fa-droplet sensor-icon"></i>
+                            <h5 class="card-title">Humidité</h5>
+                            <div class="sensor-value" id="humidity-esp32_2">--%</div>
+                            <div class="progress mt-2">
+                                <div class="progress-bar bg-info" id="humidity-progress-esp32_2" role="progressbar"></div>
+                            </div>
+                            <div class="sensor-range mt-2">20.0% à 85.0%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vibration -->
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="fa-duotone fa-wave-sine sensor-icon"></i>
+                            <h5 class="card-title">Vibration</h5>
+                            <div class="sensor-value" id="vibration-esp32_2">--mm/s</div>
+                            <div class="progress mt-2">
+                                <div class="progress-bar bg-warning" id="vibration-progress-esp32_2" role="progressbar"></div>
+                            </div>
+                            <div class="sensor-range mt-2">0.0mm/s à 10.0mm/s</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tension -->
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="fa-duotone fa-bolt sensor-icon"></i>
+                            <h5 class="card-title">Tension</h5>
+                            <div class="sensor-value" id="voltage-esp32_2">--V</div>
+                            <div class="progress mt-2">
+                                <div class="progress-bar bg-primary" id="voltage-progress-esp32_2" role="progressbar"></div>
+                            </div>
+                            <div class="sensor-range mt-2">210V à 250V</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Courant -->
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="fa-duotone fa-amp sensor-icon"></i>
+                            <h5 class="card-title">Courant</h5>
+                            <div class="sensor-value" id="current-esp32_2">--A</div>
+                            <div class="progress mt-2">
+                                <div class="progress-bar bg-success" id="current-progress-esp32_2" role="progressbar"></div>
+                            </div>
+                            <div class="sensor-range mt-2">0.0A à 20.0A</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statut Système -->
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <i class="fa-duotone fa-shield-check sensor-icon"></i>
+                            <h5 class="card-title">Statut du Système</h5>
+                            <div class="status-ok mt-3" id="system-status-esp32_2">
+                                <i class="fa-duotone fa-circle-check status-icon"></i>
+                                Tout est normal
+                            </div>
+                            <div class="mt-3">
+                                <strong>État Moteur: </strong>
+                                <span id="motor-status-esp32_2" class="badge bg-success">
+                                    <i class="fa-duotone fa-engine status-icon"></i>
+                                    OK
+                                </span>
+                            </div>
+                            <div class="last-update mt-3" id="last-update-esp32_2">
+                                <i class="fa-duotone fa-clock"></i>
+                                Dernière mise à jour: --:--
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analyse Moteur -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <i class="fa-duotone fa-chart-network sensor-icon"></i>
+                            <h5 class="card-title">Analyse Moteur</h5>
+                            <div class="mt-3">
+                                <strong>
+                                    <i class="fa-duotone fa-triangle-exclamation"></i>
+                                    Risque de Panne:
+                                </strong>
+                                <span id="failure-risk-esp32_2">0%</span>
+                            </div>
+                            <div class="mt-2">
+                                <strong>
+                                    <i class="fa-duotone fa-clipboard-list-check"></i>
+                                    Problèmes Détectés:
+                                </strong>
+                                <ul id="detected-problems-esp32_2" class="mt-2">
+                                    <li>
+                                        <i class="fa-duotone fa-check-circle success-icon"></i>
+                                        Aucun problème détecté
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        function updateDashboard() {
+            fetch('/api/data')
+                .then(response => response.json())
+                .then(data => {
+                    // Mise à jour pour chaque ESP32
+                    ['esp32_1', 'esp32_2'].forEach(esp32Id => {
+                        const espData = data[esp32Id];
+                        if (!espData) return;
+
+                        // Mise à jour des valeurs
+                        document.getElementById(`temperature-${esp32Id}`).textContent = `${espData.temperature}°C`;
+                        document.getElementById(`humidity-${esp32Id}`).textContent = `${espData.humidity}%`;
+                        document.getElementById(`vibration-${esp32Id}`).textContent = `${espData.vibration}mm/s`;
+                        document.getElementById(`voltage-${esp32Id}`).textContent = `${espData.voltage}V`;
+                        document.getElementById(`current-${esp32Id}`).textContent = `${espData.current}A`;
+                        
+                        // Mise à jour des progress bars
+                        document.getElementById(`temp-progress-${esp32Id}`).style.width = 
+                            `${((espData.temperature + 10) / 50) * 100}%`;
+                        document.getElementById(`humidity-progress-${esp32Id}`).style.width = 
+                            `${(espData.humidity / 85) * 100}%`;
+                        document.getElementById(`vibration-progress-${esp32Id}`).style.width = 
+                            `${(espData.vibration / 10) * 100}%`;
+                        document.getElementById(`voltage-progress-${esp32Id}`).style.width = 
+                            `${((espData.voltage - 210) / 40) * 100}%`;
+                        document.getElementById(`current-progress-${esp32Id}`).style.width = 
+                            `${(espData.current / 20) * 100}%`;
+
+                        // Mise à jour des icônes et statuts
+                        updateIcons(espData, esp32Id);
+
+                        // Mise à jour de la dernière mise à jour
+                        document.getElementById(`last-update-${esp32Id}`).textContent = 
+                            `Dernière mise à jour: ${espData.last_update}`;
+
+                        // Mise à jour du risque de panne
+                        document.getElementById(`failure-risk-${esp32Id}`).textContent = 
+                            `${(espData.prediction?.risk * 100).toFixed(1)}%`;
+
+                        // Gestion de l'affichage du bouton d'urgence
+                        const emergencyButton = document.getElementById(`emergency-stop-${esp32Id}`);
+                        const riskLevel = espData.prediction?.risk || 0;
+                        const motorStatusValue = espData.prediction?.motor_status || 'OK';
+                        const temperature = parseFloat(espData.temperature);
+                        const vibration = parseFloat(espData.vibration);
+                        const current = parseFloat(espData.current);
+                        
+                        // Conditions pour afficher le bouton d'urgence
+                        const showEmergency = 
+                            riskLevel >= 0.7 || // Risque élevé
+                            motorStatusValue === 'CRITIQUE' || // État moteur critique
+                            temperature > 35 || // Température trop élevée
+                            vibration > 8 || // Vibrations excessives
+                            current > 18; // Courant trop élevé
+
+                        if (showEmergency) {
+                            emergencyButton.style.display = 'block';
+                            // Ajouter une classe d'animation pour attirer l'attention
+                            emergencyButton.classList.add('animate__animated', 'animate__headShake');
+                        } else {
+                            emergencyButton.style.display = 'none';
+                            emergencyButton.classList.remove('animate__animated', 'animate__headShake');
+                        }
+
+                        // Mise à jour du badge de statut
+                        const statusBadge = document.getElementById(`status-${esp32Id}`);
+                        const lastUpdateTime = new Date(espData.last_update);
+                        const now = new Date();
+                        const timeDiff = (now - lastUpdateTime) / 1000; // différence en secondes
+
+                        if (timeDiff > 30) { // Si pas de mise à jour depuis 30 secondes
+                            statusBadge.textContent = 'Hors ligne';
+                            statusBadge.style.backgroundColor = 'rgba(255, 0, 0, 0.3)';
+                        } else {
+                            statusBadge.textContent = 'En ligne';
+                            statusBadge.style.backgroundColor = 'rgba(0, 255, 0, 0.3)';
+                        }
+                    });
+                })
+                .catch(error => console.error('Erreur:', error));
+        }
+
+        function updateIcons(data, esp32Id) {
+            const systemStatus = document.getElementById(`system-status-${esp32Id}`);
+            if (data.status === 'normal') {
+                systemStatus.innerHTML = `
+                    <i class="fa-duotone fa-circle-check status-icon success-icon"></i>
+                    Tout est normal
+                `;
+                systemStatus.className = 'status-ok mt-3';
+            } else {
+                systemStatus.innerHTML = `
+                    <i class="fa-duotone fa-triangle-exclamation status-icon alert-icon"></i>
+                    Anomalie détectée
+                `;
+                systemStatus.className = 'status-error mt-3';
+            }
+
+            const motorStatus = document.getElementById(`motor-status-${esp32Id}`);
+            if (data.prediction?.motor_status === 'OK') {
+                motorStatus.innerHTML = `
+                    <i class="fa-duotone fa-engine status-icon"></i>
+                    OK
+                `;
+                motorStatus.className = 'badge bg-success';
+            } else {
+                motorStatus.innerHTML = `
+                    <i class="fa-duotone fa-engine-warning status-icon"></i>
+                    ${data.prediction?.motor_status || 'ATTENTION'}
+                `;
+                motorStatus.className = 'badge bg-danger';
+            }
+
+            const problemsList = document.getElementById(`detected-problems-${esp32Id}`);
+            problemsList.innerHTML = '';
+            if (data.prediction?.details && data.prediction.details.length > 0) {
+                data.prediction.details.forEach(problem => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <i class="fa-duotone fa-triangle-exclamation warning-icon"></i>
+                        ${problem}
+                    `;
+                    problemsList.appendChild(li);
+                });
+            } else {
+                problemsList.innerHTML = `
+                    <li>
+                        <i class="fa-duotone fa-check-circle success-icon"></i>
+                        Aucun problème détecté
+                    </li>
+                `;
+            }
+        }
+
+        // Mise à jour initiale
+        updateDashboard();
+
+        // Mise à jour toutes les 5 secondes
+        setInterval(updateDashboard, 5000);
+
+        // Gestionnaires d'événements pour les boutons d'urgence
+        ['esp32_1', 'esp32_2'].forEach(esp32Id => {
+            document.getElementById(`emergency-stop-${esp32Id}`).addEventListener('click', function() {
+                if (confirm(`⚠️ ATTENTION: Voulez-vous vraiment activer l'arrêt d'urgence pour le ${esp32Id === 'esp32_1' ? 'Convoyeur 1' : 'Convoyeur 2'} ?`)) {
+                    fetch(`/api/emergency-stop/${esp32Id}`, {
+                        method: 'POST',
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            alert(`✅ Arrêt d'urgence activé avec succès pour le ${esp32Id === 'esp32_1' ? 'Convoyeur 1' : 'Convoyeur 2'}`);
+                            updateDashboard();
+                        } else {
+                            alert(`❌ Erreur lors de l'activation de l'arrêt d'urgence pour le ${esp32Id === 'esp32_1' ? 'Convoyeur 1' : 'Convoyeur 2'}`);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erreur:', error);
+                        alert(`❌ Erreur lors de l'activation de l'arrêt d'urgence pour le ${esp32Id === 'esp32_1' ? 'Convoyeur 1' : 'Convoyeur 2'}`);
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html> 
