@@ -389,7 +389,7 @@
                 <a class="nav-link" href="/historique">
                     <i class="fa-duotone fa-clock-rotate-left nav-icon"></i> Historique
                 </a>
-                <a class="nav-link" href="/download_history">
+                <a class="nav-link" href="/download_csv">
                     <i class="fa-duotone fa-file-arrow-down nav-icon"></i> Télécharger CSV
                 </a>
             </div>
@@ -414,6 +414,14 @@
                 Convoyeur 1
                 <span class="conveyor-badge" id="status-esp32_1">En ligne</span>
             </h2>
+            <div class="mb-4 text-center">
+                <button id="btn-start-esp32_1" class="btn btn-success me-2">
+                    <i class="fa-duotone fa-play"></i> Démarrer
+                </button>
+                <button id="btn-stop-esp32_1" class="btn btn-warning me-2">
+                    <i class="fa-duotone fa-stop"></i> Arrêter
+                </button>
+            </div>
             <div class="row g-4">
                 <!-- Température -->
                 <div class="col-md-4">
@@ -554,7 +562,14 @@
                 Convoyeur 2
                 <span class="conveyor-badge" id="status-esp32_2">En ligne</span>
             </h2>
-            <!-- Répéter la même structure que pour le Convoyeur 1 mais avec les IDs modifiés pour esp32_2 -->
+            <div class="mb-4 text-center">
+                <button id="btn-start-esp32_2" class="btn btn-success me-2">
+                    <i class="fa-duotone fa-play"></i> Démarrer
+                </button>
+                <button id="btn-stop-esp32_2" class="btn btn-warning me-2">
+                    <i class="fa-duotone fa-stop"></i> Arrêter
+                </button>
+            </div>
             <div class="row g-4">
                 <!-- Température -->
                 <div class="col-md-4">
@@ -859,4 +874,30 @@
         });
     </script>
 </body>
-</html> 
+</html>
+
+<!-- Add this JavaScript at the end of the file, before the closing </body> tag -->
+<script>
+    async function sendControl(esp, action) {
+        try {
+            const res = await fetch(`/api/control/${esp}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ action })
+            });
+            const json = await res.json();
+            alert(json.message);
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Une erreur s'est produite");
+        }
+    }
+
+    // Add click handlers for start and stop buttons
+    document.getElementById("btn-start-esp32_1").onclick = () => sendControl("esp32_1", "start");
+    document.getElementById("btn-stop-esp32_1").onclick = () => sendControl("esp32_1", "stop");
+    document.getElementById("btn-start-esp32_2").onclick = () => sendControl("esp32_2", "start");
+    document.getElementById("btn-stop-esp32_2").onclick = () => sendControl("esp32_2", "stop");
+</script>
+</body>
+</html>

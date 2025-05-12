@@ -86,6 +86,15 @@ def api_history(esp32_id):
     return jsonify({"data": data})
 
 
+@app.route("/download_csv")
+def download_csv():
+    return send_file(
+        settings.data_file,
+        mimetype='text/csv',
+        as_attachment=True,
+        download_name='historique.csv'
+    )
+
 if __name__ == "__main__":
     threading.Thread(target=start_mqtt, daemon=True).start()
     app.run(

@@ -128,7 +128,7 @@
           <a class="nav-link" href="/">Dashboard</a>
           <a class="nav-link" href="/graphiques">Graphiques</a>
           <a class="nav-link active" href="/historique">Historique</a>
-          <a class="nav-link" href="/download_history">Télécharger CSV</a>
+          <a class="nav-link" href="/download_csv">Télécharger CSV</a>
         </div>
       </div>
     </nav>
@@ -201,8 +201,14 @@
       </div>
       <div id="esp32_2-section" class="conveyor-section">
         <div class="card">
-          <div class="card-body p-0">
-            <table id="table-esp32_2" class="table table-striped"></table>
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="card-title">Historique des données</h5>
+              <a href="/download_csv" class="btn btn-primary">
+                <i class="fas fa-download"></i> Télécharger CSV
+              </a>
+            </div>
+            <!-- Rest of your table content -->
           </div>
         </div>
       </div>
